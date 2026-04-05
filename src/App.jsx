@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from './hooks/useAuth'
 import BottomNav from './components/BottomNav'
 import Home from './screens/Home'
 import Pacientes from './screens/Pacientes'
+import PacienteDetalhe from './screens/PacienteDetalhe'
 import Referencia from './screens/Referencia'
 import Ferramentas from './screens/Ferramentas'
 import Menu from './screens/Menu'
@@ -37,6 +38,7 @@ function AppLayout() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/pacientes" element={<Pacientes />} />
+        <Route path="/pacientes/:id" element={<PacienteDetalhe />} />
         <Route path="/referencia" element={<Referencia />} />
         <Route path="/ferramentas" element={<Ferramentas />} />
         <Route path="/menu" element={<Menu />} />
