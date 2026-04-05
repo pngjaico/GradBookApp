@@ -1,0 +1,50 @@
+:root {
+  --color-primary: #00C896;
+  --color-cyan: #00B4D8;
+  --color-bg: #1E2433;
+  --color-sidebar: #252B3A;
+  --color-text: #E8EBF0;
+  --color-text-secondary: #8B95A8;
+  --color-surface: #2A3142;
+  --color-danger: #FF4D6A;
+  --radius: 12px;
+  --transition: 150ms ease;
+  font-family: 'DM Sans', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  max-width: 430px;
+  margin: 0 auto;
+  font-size: 15px;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: var(--radius);
+  min-height: 48px;
+  font-family: inherit;
+  font-size: 15px;
+  transition: opacity var(--transition);
+}
+
+button:active {
+  opacity: 0.8;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #0A0F1A;
+  font-weight: 600;
+  width: 100%;
+  padding: 0 20px;
+}
