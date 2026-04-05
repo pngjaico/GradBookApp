@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider, useAuth } from './hooks/useAuth'
 import BottomNav from './components/BottomNav'
 import Home from './screens/Home'
 import Pacientes from './screens/Pacientes'
@@ -8,8 +9,27 @@ import Menu from './screens/Menu'
 import Login from './auth/Login'
 import Cadastro from './auth/Cadastro'
 
-// Por enquanto sem auth real — troca para false para ver tela de login
-const isLoggedIn = true
+function Spinner() {
+  return (
+    <div style={{
+      minHeight: '100dvh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      background: 'var(--color-bg)',
+    }}>
+      <div style={{
+        width: 36,
+        height: 36,
+        borderRadius: '50%',
+        border: '3px solid var(--color-surface)',
+        borderTopColor: 'var(--color-primary)',
+        animation: 'spin 0.8s linear infinite',
+      }} />
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  )
+}
 
 function AppLayout() {
   return (
@@ -26,17 +46,36 @@ function AppLayout() {
   )
 }
 
+function AuthGate() {
+  const user = useAuth()
+
+  // undefined = Firebase ainda resolvendo o estado de auth
+  if (user === undefined) return <Spinner />
+
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={user ? <Navigate to="/" replace /> : <Login />}
+      />
+      <Route
+        path="/cadastro"
+        element={user ? <Navigate to="/" replace /> : <Cadastro />}
+      />
+      <Route
+        path="/*"
+        element={user ? <AppLayout /> : <Navigate to="/login" replace />}
+      />
+    </Routes>
+  )
+}
+
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route
-          path="/*"
-          element={isLoggedIn ? <AppLayout /> : <Navigate to="/login" replace />}
-        />
-      </Routes>
+      <AuthProvider>
+        <AuthGate />
+      </AuthProvider>
     </BrowserRouter>
   )
 }
